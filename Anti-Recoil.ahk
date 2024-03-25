@@ -87,9 +87,6 @@ LButton Up::
 {
     ; Toggles the dragging state and simulates mouse down/up events.
     global Drag, Enabled
-    if !Enabled {
-        return
-    }
     switch A_ThisHotkey {
         case "LButton":
             Click "Down"
@@ -112,9 +109,6 @@ RButton Up::
 {
     ; Changes the delay based on zooming state and simulates right mouse button down/up events.
     global Selected, Primary, Delay, Enabled
-    if !Enabled {
-        return
-    }
     switch A_ThisHotkey {
         case "RButton":
             Click("Right Down")
