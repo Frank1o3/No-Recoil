@@ -29,8 +29,11 @@ SetTimer(main, 1)
 F4:: ExitApp(0)
 F3:: Reload()
 
+#HotIf WinActive('Roblox')
 F2:: {
-
+    global Enabled
+    Enabled := !Enabled
+    Sleep 100
 }
 
 #HotIf WinActive('Roblox')
