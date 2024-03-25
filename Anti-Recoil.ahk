@@ -141,8 +141,8 @@ Update1(thisGui, _) {
     global Selected, f
     args := [0, 0, 0]
     data := parse(&f) ; Assuming JSON.ahk is compatible with AHK v2
-    c := String(StrLower(thisGui.Text))
-    if c == " " {
+    c := thisGui.Text
+    if (c == A_Space || c == "`n") {
         MsgBox "Pls Select a valid option"
         return
     }
@@ -162,8 +162,8 @@ Update2(thisGui, _) {
     global Selected, f
     args := [0, 0, 0]
     data := parse(&f)
-    c := String(StrLower(thisGui.Text))
-    if c == " " {
+    c := thisGui.Text
+    if (c == A_Space || c == "`n") {
         MsgBox "Pls Select a valid option"
         return
     }

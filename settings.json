@@ -1,25 +1,25 @@
 {
-    "scar-h": {
+    "Scar-H": {
         "Speed": "2.5",
         "Delay1": "500",
         "Delay2": "15"
     },
-    "hk54": {
+    "HK54": {
         "Speed": "2.5",
         "Delay1": "498",
         "Delay2": "50"
     },
-    "m4": {
+    "M4": {
         "Speed": "2.5",
         "Delay1": "200",
         "Delay2": "40"
     },
-    "ak47un": {
+    "AK47UN": {
         "Speed": "3",
         "Delay1": "200",
         "Delay2": "40"
     },
-    "s1": {
+    "S1": {
         "Speed": "3.5",
         "Delay1": "100",
         "Delay2": "10"
