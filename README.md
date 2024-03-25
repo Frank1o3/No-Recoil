@@ -1,34 +1,42 @@
+# No-Recoil Script for Roblox Games
 
-## Introduction
+## Overview
 
-This script is designed to help reduce recoil in Gunfight Arena, specifically optimized the Delay's for the H scar. It uses AutoHotkey to simulate mouse movements and clicks, aiming to provide a smoother gaming experience.
-
-**Note**: While this script is for Gunfight Arena, it will work perfectly in other Roblox games. But you may need to adjust the values in the `data.json` file to achieve the desired effect in different games.
+This script is designed to reduce recoil in Roblox games, specifically optimized for the H scar. It uses AutoHotkey to simulate mouse movements and clicks, aiming to provide a smoother gaming experience. The script is intended to enhance gameplay by helping players control recoil more effectively.
 
 ## Features
 
-- **Single Instance**: Ensures only one instance of the script runs at a time.
-- **Customizable Settings**: Allows users to adjust speed, delay1, and delay2 settings through a JSON file.
-- **Hotkeys for Roblox**: Defines hotkeys for left and right mouse buttons, active only when the Roblox window is in focus.
-- **Exit Hotkey**: F1 key is set as a hotkey to exit the application.
+- **Customizable Settings**: The script includes customizable settings for different guns, allowing players to tailor the recoil reduction to their preferences.
+- **GUI for Gun Selection**: A graphical user interface (GUI) is provided for selecting the gun currently in use, making it easy to switch between different guns and their settings.
+- **Default Configurations**: The script comes with default configurations for several guns, ensuring a good starting point for new users.
+- **Easy Installation and Usage**: The script is straightforward to install and use, with clear instructions provided in this README.
 
 ## Installation
 
-1. **AutoHotkey**: Ensure you have AutoHotkey installed on your system. You can download it from [here](https://www.autohotkey.com/).
-2. **JSON Library**: This script includes a JSON library for parsing JSON files. Ensure the `JSON.ahk` file is in the same directory as your script.
-3. **Script Setup**: Download or clone this repository to your local machine.
-4. **Run the Script**: Double-click the `Anti-Recoil.ahk` file to run the script.
+1. **Download AutoHotkey**: If you haven't already, download and install AutoHotkey from [https://www.autohotkey.com/](https://www.autohotkey.com/).
+2. **Download the Script**: Download the `Anti-Recoil.ahk` script from this repository.
+3. **Run the Script**: Double-click the `Anti-Recoil.ahk` file to run the script. You may need to allow the script to run through your firewall or antivirus software.
 
 ## Usage
 
-- **Settings**: The script reads settings from a `data.json` file. If the file does not exist, it will create one with default settings. You can modify these settings as needed.
-- **Hotkeys**: The script defines hotkeys for left and right mouse buttons, which are only active when the Roblox window is active. These hotkeys handle dragging and zooming in the game.
-- **Exit**: Press F1 to exit the application.
+1. **Open the GUI**: Press `F2` to open the GUI for selecting a gun.
+2. **Select a Gun**: Use the dropdown menu in the GUI to select the gun you are currently using in Roblox.
+3. **Adjust Settings**: The script will automatically adjust the recoil settings based on the selected gun. You can also manually adjust the settings in the `settings.json` file.
+4. **Play the Game**: With the script running, play your Roblox game. The script will automatically manage recoil based on the selected gun and its settings.
 
-## Contribution
+## Customization
 
-Contributions are welcome! If you have suggestions for improvements or encounter any issues, please feel free to open an issue or submit a pull request.
+The script's behavior can be customized by editing the `settings.json` file. This file contains settings for different guns, including delays and speeds for recoil reduction. You can add, remove, or modify these settings to suit your preferences.
+
+## Hotkeys
+
+- **F1**: Closes the script.
+- **F2**: Opens/closes the GUI for selecting a gun.
+
+## Contributing
+
+Contributions to this project are welcome! If you have a feature request, bug report, or want to contribute code, please open an issue or submit a pull request.
 
 ## License
 
-This project is licensed under the GNU License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU License. See the `LICENSE` file for more details.
