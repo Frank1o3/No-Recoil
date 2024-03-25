@@ -122,8 +122,6 @@ RButton Up::
     }
 }
 
-#UseHook false
-
 main() {
     global Drag, Delay, Primary, Selected, Enabled
     if !Enabled {
@@ -140,36 +138,36 @@ main() {
 }
 
 Update1(thisGui, _) {
-    global Guns, Selected, f
+    global Selected, f
     local args := [0, 0, 0]
     local data := parse(&f) ; Assuming JSON.ahk is compatible with AHK v2
     local c := String(StrLower(thisGui.Text))
     MsgBox c
     for Key, value in data[c] {
         if Key == "Delay1" {
-            args.InsertAt(1, value)
+            args.InsertAt(1, Integer(value))
         } else if Key == "Delay2" {
-            args.InsertAt(2, value)
+            args.InsertAt(2, Integer(value))
         } else if Key == "Speed" {
-            args.InsertAt(3, value)
+            args.InsertAt(3, Float(value))
         }
     }
     Selected.InsertAt(1, args)
 }
 
 Update2(thisGui, _) {
-    global Guns, Selected, f
+    global Selected, f
     local args := [0, 0, 0]
     local data := parse(&f)
     local c := String(StrLower(thisGui.Text))
     MsgBox c
     for Key, value in data[c] {
         if Key == "Delay1" {
-            args.InsertAt(1, value)
+            args.InsertAt(1, Integer(value))
         } else if Key == "Delay2" {
-            args.InsertAt(2, value)
+            args.InsertAt(2, Integer(value))
         } else if Key == "Speed" {
-            args.InsertAt(3, value)
+            args.InsertAt(3, Float(value))
         }
     }
     Selected.InsertAt(2, args)
