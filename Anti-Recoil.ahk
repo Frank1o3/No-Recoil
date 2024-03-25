@@ -4,7 +4,7 @@ InstallKeybdHook(true)
 
 ; Displays a tray tip to inform the user about the script's status and hotkeys.
 TrayTip "Script is running`nF4: Closes the Script.`nF3: Reload's the Script.`nF2: Enable/Disable the Script`nF1: To open the Gui.", "Status"
-SetTimer () => TrayTip(), -8000 ; Sets a timer to periodically show the tray tip.
+SetTimer () => TrayTip(), -10000 ; Sets a timer to periodically show the tray tip.
 
 Selected := Array([0,0,0],[0,0,0])
 Guns := SmartRead()

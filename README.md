@@ -14,12 +14,12 @@ This script is designed to reduce recoil in Roblox games, specifically optimized
 ## Installation
 
 1. **Download AutoHotkey**: If you haven't already, download and install AutoHotkey from [https://www.autohotkey.com/](https://www.autohotkey.com/).
-2. **Download the Script**: Download the `Anti-Recoil.ahk` script from this repository.
-3. **Run the Script**: Double-click the `Anti-Recoil.ahk` file to run the script. You may need to allow the script to run through your firewall or antivirus software.
+2. **Download the Script**: Download the `Anti-Recoil.exe` script from this repository.
+3. **Run the Script**: Double-click the `Anti-Recoil.exe` file to run the script. You may need to allow the script to run through your firewall or antivirus software.
 
 ## Usage
 
-1. **Open the GUI**: Press `F2` to open the GUI for selecting a gun.
+1. **Open the GUI**: Press `F1` to open the GUI for selecting a gun.
 2. **Select a Gun**: Use the dropdown menu in the GUI to select the gun you are currently using in Roblox.
 3. **Adjust Settings**: The script will automatically adjust the recoil settings based on the selected gun. You can also manually adjust the settings in the `settings.json` file.
 4. **Play the Game**: With the script running, play your Roblox game. The script will automatically manage recoil based on the selected gun and its settings.
@@ -32,6 +32,8 @@ The script's behavior can be customized by editing the `settings.json` file. Thi
 
 - **F1**: Closes the script.
 - **F2**: Opens/closes the GUI for selecting a gun.
+- **F3**: Reloads the script.
+- **F4**: Exits the script.
 
 ## Contributing
 
