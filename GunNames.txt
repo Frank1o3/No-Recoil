@@ -1,1 +1,2 @@
-Scar-H HK54 S1 M4
+Primary   Scar-H HK54 M4
+Secondary S1
