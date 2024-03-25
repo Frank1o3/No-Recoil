@@ -55,7 +55,7 @@ F1::
         show := true
         Sleep 500
         return
-    }
+    }  
 }
 
 #HotIf WinActive('Roblox')
