@@ -24,6 +24,7 @@ Option1 := MyGui.AddDropDownList("x5 y10 w140", Guns[1])
 MyGui.AddText("x150 y10 w150 h30", "Select Your Primary Gun.")
 Option2 := MyGui.AddDropDownList("x5 y40 w140", Guns[2])
 MyGui.AddText("x150 y40 w150 h30", "Select Your Secondary Gun.")
+MyGui.AddText("x5 y80 w150 h 30", "Do not select the empty option the script will break")
 
 Option1.OnEvent("Change", Update1)
 Option2.OnEvent("Change", Update2)
@@ -142,18 +143,24 @@ Update1(thisGui, _) {
     args := [0, 0, 0]
     data := parse(&f) ; Assuming JSON.ahk is compatible with AHK v2
     c := thisGui.Text
-    if (c == A_Space || c == "`n") {
+    MyGui.Submit(false)
+    if (c == " " || c == "`n" ||  c == "`t" ||  c == "") {
         MsgBox "Pls Select a valid option"
         return
     }
-    for Key, value in data[c] {
-        if Key == "Delay1" {
-            args.InsertAt(1, Integer(value))
-        } else if Key == "Delay2" {
-            args.InsertAt(2, Integer(value))
-        } else if Key == "Speed" {
-            args.InsertAt(3, Float(value))
+    try {
+        for Key, value in data[c] {
+            if Key == "Delay1" {
+                args.InsertAt(1, Integer(value))
+            } else if Key == "Delay2" {
+                args.InsertAt(2, Integer(value))
+            } else if Key == "Speed" {
+                args.InsertAt(3, Float(value))
+            }
         }
+    }
+    catch {
+        ExitApp(0)
     }
     Selected.InsertAt(1, args)
 }
@@ -163,18 +170,24 @@ Update2(thisGui, _) {
     args := [0, 0, 0]
     data := parse(&f)
     c := thisGui.Text
-    if (c == A_Space || c == "`n") {
+    MyGui.Submit(false)
+    if (c == " " || c == "`n" ||  c == "`t" ||  c == "") {
         MsgBox "Pls Select a valid option"
         return
     }
-    for Key, value in data[c] {
-        if Key == "Delay1" {
-            args.InsertAt(1, Integer(value))
-        } else if Key == "Delay2" {
-            args.InsertAt(2, Integer(value))
-        } else if Key == "Speed" {
-            args.InsertAt(3, Float(value))
+    try {
+        for Key, value in data[c] {
+            if Key == "Delay1" {
+                args.InsertAt(1, Integer(value))
+            } else if Key == "Delay2" {
+                args.InsertAt(2, Integer(value))
+            } else if Key == "Speed" {
+                args.InsertAt(3, Float(value))
+            }
         }
+    }
+    catch {
+        ExitApp(0)
     }
     Selected.InsertAt(2, args)
 }
