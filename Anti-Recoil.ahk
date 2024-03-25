@@ -139,11 +139,13 @@ main() {
 
 Update1(thisGui, _) {
     global Selected, f
-    local args := [0, 0, 0]
-    local data := parse(&f) ; Assuming JSON.ahk is compatible with AHK v2
-    local c := String(StrLower(thisGui.Text))
+    args := [0, 0, 0]
+    data := parse(&f) ; Assuming JSON.ahk is compatible with AHK v2
+    c := String(StrLower(thisGui.Text))
     MsgBox c
-    for Key, value in data[c] {
+    e := data[c]
+    MsgBox e["Speed"]
+    for Key, value in e {
         if Key == "Delay1" {
             args.InsertAt(1, Integer(value))
         } else if Key == "Delay2" {
@@ -157,11 +159,13 @@ Update1(thisGui, _) {
 
 Update2(thisGui, _) {
     global Selected, f
-    local args := [0, 0, 0]
-    local data := parse(&f)
-    local c := String(StrLower(thisGui.Text))
+    args := [0, 0, 0]
+    data := parse(&f)
+    c := String(StrLower(thisGui.Text))
     MsgBox c
-    for Key, value in data[c] {
+    e := data[c]
+    MsgBox e["Speed"]
+    for Key, value in e {
         if Key == "Delay1" {
             args.InsertAt(1, Integer(value))
         } else if Key == "Delay2" {
