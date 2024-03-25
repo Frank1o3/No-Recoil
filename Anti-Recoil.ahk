@@ -60,13 +60,15 @@ F1::
 #HotIf WinActive('Roblox')
 WheelUp::
 {
-    global Primary, Enabled
+    global Primary, Enabled, Delay, Selected
     if !Enabled {
         return
     }
+    Delay := Selected[Primary][1]
     Send("{WheelDown Down}")
-    Sleep 200
+    Sleep 300
     Send("{WheelDown Up}")
+    Sleep 300
     if (Primary == 1) {
         Primary := 2
         return
@@ -130,7 +132,8 @@ main() {
     if GetKeyState("F","P") || GetKeyState("Enter","P") {
         Primary := 1
     }
-    ToolTip (Primary == 1) ? "Primary":"Secondary"
+    ;ToolTip (Primary == 1) ? "Primary":"Secondary"
+    ToolTip Delay
     if (Drag) {
         DllCall("mouse_event", "UInt", 0x01, "UInt", 0, "UInt", Selected[Primary][3])
         Sleep Delay
@@ -138,7 +141,7 @@ main() {
 }
 
 Update1(thisGui,*) {
-    global Guns, Selected
+    global Guns, Selected, Delay
     local args := []
     local name := Guns[1][thisGui.Value]
     local f := FileRead("settings.json")
@@ -146,6 +149,7 @@ Update1(thisGui,*) {
     for Key, value in data[name] {
         if Key == "Delay1" {
             args.__New(value)
+            Delay := value
         } else if Key == "Delay2" {
             args.__New(value)
         } else if Key == "Speed" {

@@ -11,11 +11,11 @@
     },
     "S1": {
         "Speed": 2.5,
-        "Delay1": 450,
+        "Delay1": 250,
         "Delay2": 20
     },
     "M4": {
-        "Speed": 2.5,
+        "Speed": 3.5,
         "Delay1": 200,
         "Delay2": 40
     }
