@@ -1,9 +1,9 @@
 
 ## Introduction
 
-This script is designed to help reduce recoil in Gunfight Arena, specifically optimized for the H scar. It uses AutoHotkey to simulate mouse movements and clicks, aiming to provide a smoother gaming experience.
+This script is designed to help reduce recoil in Gunfight Arena, specifically optimized the Delay's for the H scar. It uses AutoHotkey to simulate mouse movements and clicks, aiming to provide a smoother gaming experience.
 
-**Note**: While this script is optimized for Gunfight Arena, it will work perfectly in other Roblox games. But you may need to adjust the values in the `data.json` file to achieve the desired effect in different games.
+**Note**: While this script is for Gunfight Arena, it will work perfectly in other Roblox games. But you may need to adjust the values in the `data.json` file to achieve the desired effect in different games.
 
 ## Features
 
