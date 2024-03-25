@@ -3,11 +3,12 @@ InstallKeybdHook(true)
 #Include JSON.ahk
 
 ; Displays a tray tip to inform the user about the script's status and hotkeys.
-TrayTip "Script is running`nF3: Closes the Script.`nF2: Reload's the Script.`nF1: To open the Gui.", "Status"
+TrayTip "Script is running`nF4: Closes the Script.`nF3: Reload's the Script.`nF2: Enable/Disable the Script`nF1: To open the Gui.", "Status"
 SetTimer () => TrayTip(), -8000 ; Sets a timer to periodically show the tray tip.
 
-Guns := SmartRead()
 Selected := Array([0,0,0],[0,0,0])
+Guns := SmartRead()
+Enabled := false
 Primary := 1
 Drag := false
 Show := false
@@ -25,8 +26,8 @@ Option2.OnEvent("Change", Update2)
 SetTimer(main, 1)
 
 #UseHook true
-F3:: ExitApp(0)
-F2:: Reload()
+F4:: ExitApp(0)
+F3:: Reload()
 
 #HotIf WinActive('Roblox')
 F1::
@@ -47,10 +48,16 @@ F1::
 }
 
 #HotIf WinActive('Roblox')
-WheelUp:: {
-    global Primary
+WheelUp::
+WheelUp Up::
+{
+    global Primary, Enabled
     switch A_ThisHotkey {
-        case "LButton":
+        case "WheelUp":
+            if !Enabled {
+                Send("{WheelUp Down}")
+                return
+            }
             Send("{WheelDown Down}")
             if (Primary == 1) {
                 Primary := 2
@@ -58,7 +65,11 @@ WheelUp:: {
                 Primary := 1
             }
             Sleep 100
-        case "LButton Up":
+        case "WheelUp Up":
+            if !Enabled {
+                Send("{WheelUp Up}")
+                return
+            }
             Send("{WheelDown Up}")
     }
 }
@@ -68,13 +79,22 @@ LButton::
 LButton Up::
 {
     ; Toggles the dragging state and simulates mouse down/up events.
-    global Drag
+    global Drag, Enabled
+    if !Enabled {
+        return
+    }
     switch A_ThisHotkey {
         case "LButton":
             Click "Down"
+            if !Enabled {
+                return
+            }
             Drag := true
         case "LButton Up":
             Click "Up"
+            if !Enabled {
+                return
+            }
             Drag := false
     }
 }
@@ -84,21 +104,33 @@ RButton::
 RButton Up::
 {
     ; Changes the delay based on zooming state and simulates right mouse button down/up events.
-    global Selected, Primary, Delay
+    global Selected, Primary, Delay, Enabled
+    if !Enabled {
+        return
+    }
     switch A_ThisHotkey {
         case "RButton":
-            Delay := Selected[Primary][2]
             Click("Right Down")
+            if !Enabled {
+                return
+            }
+            Delay := Selected[Primary][2]
         case "RButton Up":
-            DDelay := Selected[Primary][1]
             Click("Right Up")
+            if !Enabled {
+                return
+            }
+            Delay := Selected[Primary][1]
     }
 }
 
 #UseHook false
 
 main() {
-    global Drag, Delay, Primary, Selected
+    global Drag, Delay, Primary, Selected, Enabled
+    if !Enabled {
+        return
+    }
     ToolTip Primary ? "Primary":"Secondary"
     if (Drag) {
         DllCall("mouse_event", "UInt", 0x01, "UInt", 0, "UInt", Selected[Primary][3])
