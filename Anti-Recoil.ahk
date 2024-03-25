@@ -142,10 +142,10 @@ Update1(thisGui, _) {
     args := [0, 0, 0]
     data := parse(&f) ; Assuming JSON.ahk is compatible with AHK v2
     c := String(StrLower(thisGui.Text))
-    MsgBox c
-    e := data[c]
-    MsgBox e["Speed"]
-    for Key, value in e {
+    if c == " " {
+        MsgBox "Pls Select a valid option"
+    }
+    for Key, value in data[c] {
         if Key == "Delay1" {
             args.InsertAt(1, Integer(value))
         } else if Key == "Delay2" {
@@ -162,10 +162,10 @@ Update2(thisGui, _) {
     args := [0, 0, 0]
     data := parse(&f)
     c := String(StrLower(thisGui.Text))
-    MsgBox c
-    e := data[c]
-    MsgBox e["Speed"]
-    for Key, value in e {
+    if c == " " {
+        MsgBox "Pls Select a valid option"
+    }
+    for Key, value in data[c] {
         if Key == "Delay1" {
             args.InsertAt(1, Integer(value))
         } else if Key == "Delay2" {
