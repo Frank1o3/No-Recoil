@@ -4,8 +4,8 @@ InstallKeybdHook(true)
 
 ; Displays a tray tip to inform the user about the script's status and hotkeys.
 TrayTip "Script is Running...", "Status Report"
-SetTimer () => TrayTip(), -3000
-Sleep 3000
+SetTimer () => TrayTip(), -2000
+Sleep 2000
 TrayTip "F4: Closes the Script.`nF3: Reload's the Script.`nF2: Enable/Disable the Script`nF1: Open's Gui", "Key binds"
 SetTimer () => TrayTip(), -10000 ; Sets a timer to periodically show the tray tip.
 
@@ -59,28 +59,20 @@ F1::
 
 #HotIf WinActive('Roblox')
 WheelUp::
-WheelUp Up::
 {
     global Primary, Enabled
-    switch A_ThisHotkey {
-        case "WheelUp":
-            if !Enabled {
-                Send("{WheelUp Down}")
-                return
-            }
-            Send("{WheelDown Down}")
-            if (Primary == 1) {
-                Primary := 2
-            } else {
-                Primary := 1
-            }
-            Sleep 100
-        case "WheelUp Up":
-            if !Enabled {
-                Send("{WheelUp Up}")
-                return
-            }
-            Send("{WheelDown Up}")
+    if !Enabled {
+        return
+    }
+    Send("{WheelDown Down}")
+    Sleep 200
+    Send("{WheelDown Up}")
+    if (Primary == 1) {
+        Primary := 2
+        return
+    } else {
+        Primary := 1
+        return
     }
 }
 
@@ -135,7 +127,10 @@ main() {
     if !Enabled {
         return
     }
-    ToolTip Primary ? "Primary":"Secondary"
+    if GetKeyState("F","P") || GetKeyState("F","Enter") {
+        Primary := 1
+    }
+    ToolTip (Primary == 1) ? "Primary":"Secondary"
     if (Drag) {
         DllCall("mouse_event", "UInt", 0x01, "UInt", 0, "UInt", Selected[Primary][3])
         Sleep Delay
