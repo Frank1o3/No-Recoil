@@ -2,16 +2,17 @@
 InstallKeybdHook(true)
 #Include JSON.ahk
 
+Enabled := false
+
 ; Displays a tray tip to inform the user about the script's status and hotkeys.
 TrayTip "Script is Running...", "Status Report"
 SetTimer () => TrayTip(), -2000
-Sleep 2000
+Sleep 2500
 TrayTip "F4: Closes the Script.`nF3: Reload's the Script.`nF2: Enable/Disable the Script`nF1: Open's Gui", "Key binds"
 SetTimer () => TrayTip(), -10000 ; Sets a timer to periodically show the tray tip.
 
 Selected := Array([0,0,0],[0,0,0])
 Guns := SmartRead()
-Enabled := false
 Primary := 1
 Drag := false
 Show := false
@@ -64,18 +65,16 @@ WheelUp::
     if !Enabled {
         return
     }
-    Delay := Selected[Primary][1]
     Send("{WheelDown Down}")
     Sleep 300
     Send("{WheelDown Up}")
     Sleep 300
     if (Primary == 1) {
         Primary := 2
-        return
     } else {
         Primary := 1
-        return
     }
+    Delay := Selected[Primary][1]
 }
 
 #HotIf WinActive('Roblox')
