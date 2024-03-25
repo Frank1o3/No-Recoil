@@ -19,7 +19,7 @@ InstallKeybdHook(true)
 ; Check if the settings file exists. If not, create it with default settings and reload the script.
 if !FileExist("data.json") {
     ; Default settings for speed, delay1, and delay2.
-    FileAppend('{`n`t"Speed": 2.5,`n`t"Delay1": 500,`n`t"Delay2": 20`n}',"data.json")
+    FileAppend('{`n`t"Speed": 2.5,`n`t"Delay1": 500,`n`t"Delay2": 25`n}',"data.json")
     Reload()
 }
 
