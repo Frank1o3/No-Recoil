@@ -1,0 +1,17 @@
+{
+    "Scar-H": {
+        "Speed": 2.5,
+        "Delay1": 500,
+        "Delay2": 20
+    },
+    "HK56": {
+        "Speed": 2.5,
+        "Delay1": 500,
+        "Delay2": 50
+    },
+    "S1": {
+        "Speed": 2.5,
+        "Delay1": 450,
+        "Delay2": 20
+    }
+}

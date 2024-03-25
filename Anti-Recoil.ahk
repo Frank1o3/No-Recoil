@@ -1,52 +1,59 @@
-/************************************************************************
- * @description Anti-Recoil script for Gunfight Arena.
- *  Note: the Default setting are the ones that work for the H scar in the game, but fell free to change the settings.
- * @file Anti-Recoil.ahk
- * @author Frank1o3
- * @date 2024/03/24
- * @version 1.0.0
- ***********************************************************************/
-
-TrayTip "Script is running`nF1: Closes the Script", "Status"
-SetTimer () => TrayTip(), -5000
-
-; Force the script to run as a single instance, preventing multiple instances from running simultaneously.
 #SingleInstance Force
-
-; Install a keyboard hook to allow the script to intercept keyboard events.
 InstallKeybdHook(true)
-
-; Include the JSON library for parsing JSON files.
 #Include JSON.ahk
 
-; Check if the settings file exists. If not, create it with default settings and reload the script.
-if !FileExist("data.json") {
-    ; Default settings for speed, delay1, and delay2.
-    FileAppend('{`n`t"Speed": 2.5,`n`t"Delay1": 500,`n`t"Delay2": 25`n}',"data.json")
-    Reload()
+; Tell the User the script settings
+TrayTip "Script is running`nF1: Closes the Script`nF2 To open the Gui to select a gun", "Status"
+SetTimer () => TrayTip(), -3000
+
+; Variable setup
+NormalZoomDelays := Array()
+ZoomInDelays := Array()
+Speeds := Array()
+NormalDelay := 0
+ZoomInDelay := 0
+Drag := false
+show := false
+Delay := 0
+Speed := 0
+
+f := FileRead("GunNames.txt")
+names := StrSplit(f, " ")
+list := Array()
+
+for name in names {
+    name := String(name)
+    list.__New(name)
+    LoadVals(name)
 }
 
-; Read the settings from the JSON file.
-f := FileRead("data.json")
-data := JSON.parse(f)
+MyGui := Gui(,"Gun's")
+Option := MyGui.AddDropDownList("x5 y10 w100",list)
+MyGui.AddText("x110 y7 w100 h35","Select the gun you are using")
+Option.OnEvent("Change", update)
 
-; Setup global variables for dragging, speed, and delays.
-Drag := false
-Speed := data["Speed"]
-NormalDelay := data["Delay1"]
-ZoomInDelay := data["Delay2"]
-Delay := NormalDelay
-
-; Set a timer to call the main function every 1 millisecond.
 SetTimer(main,1)
 
-; Enable the use of hooks for mouse and keyboard events.
 #UseHook true
+F1::ExitApp()
 
-; Define F1 as a hotkey to exit the application.
-F1:: ExitApp(0)
+F2::
+{
+    global show
+    if show {
+        MyGui.Hide()
+        show := false
+        Sleep 500
+        return
+    }
+    else {
+        MyGui.Show()
+        show := true
+        Sleep 500
+        return
+    }
+}
 
-; Define hotkeys for left and right mouse buttons, which are only active when the Roblox window is active.
 #HotIf WinActive('Roblox')
 LButton::
 LButton Up::
@@ -85,8 +92,35 @@ RButton Up::
 ; Main function that is called every millisecond. If dragging is active, it simulates a mouse event with the specified speed and delay.
 main() {
     global Drag, Speed, Delay
-    if (Drag) {
+    if (Drag && Speed != 0 && Delay != 0) {
         DllCall("mouse_event", "UInt", 0x01, "UInt", 0, "UInt", Speed)
         Sleep Delay
     }
+}
+
+; Functions 
+
+LoadVals(gunName) {
+    global NormalZoomDelays, ZoomInDelays, Speeds
+    local f := FileRead("settings.json")
+    local data := JSON.parse(f)
+    for Key, v in data[gunName] {
+        if Key == "Delay1" {
+            NormalZoomDelays.__New(v)
+        } else if Key == "Delay2" {
+            ZoomInDelays.__New(v)
+        } else if Key == "Speed" {
+            Speeds.__New(v)
+        }
+    }
+}
+
+update(thisGui,*) {
+    global MyGui, Speeds, ZoomInDelays, NormalZoomDelays
+    local GunNum := thisGui.Value
+    Speed := Speeds[GunNum]
+    NormalDelay := NormalZoomDelays[GunNum]
+    ZoomInDelay := ZoomInDelays[GunNum]
+    Delay := NormalDelay
+    MyGui.Submit(false)
 }
