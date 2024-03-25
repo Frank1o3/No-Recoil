@@ -11,7 +11,7 @@ Sleep 1500
 TrayTip "F4: Closes the Script.`nF3: Reload's the Script.`nF2: Enable/Disable the Script`nF1: Open's Gui", "Key binds"
 SetTimer () => TrayTip(), -10000 ; Sets a timer to periodically show the tray tip.
 
-Selected := Array([0,0,0],[0,0,0])
+Selected := Array([0, 0, 0], [0, 0, 0])
 Guns := SmartRead()
 Primary := 1
 Drag := false
@@ -55,7 +55,7 @@ F1::
         show := true
         Sleep 500
         return
-    }  
+    }
 }
 
 #HotIf WinActive('Roblox')
@@ -128,75 +128,73 @@ main() {
     if !Enabled {
         return
     }
-    if GetKeyState("F","P") {
+    if GetKeyState("F", "P") {
         Primary := 1
     }
-    ToolTip (Primary == 1) ? "Primary":"Secondary"
+    ToolTip (Primary == 1) ? "Primary" : "Secondary"
     if (Drag) {
         DllCall("mouse_event", "UInt", 0x01, "UInt", 0, "UInt", Selected[Primary][3])
         Sleep Delay
     }
 }
 
-Update1(thisGui,*) {
+Update1(thisGui, *) {
     global Guns, Selected, Delay
-    local args := []
+    local args := [0, 0, 0]
     local name := String(Guns[1][thisGui.Value])
-    MsgBox name
     local f := FileRead("settings.json")
-    local data := JSON.parse(f)
+    local data := parse(&f)
     for Key, value in data[name] {
         if Key == "Delay1" {
-            args.__New(value)
-            Delay := value
+            args.InsertAt(1, value)
         } else if Key == "Delay2" {
-            args.__New(value)
+            args.InsertAt(2, value)
         } else if Key == "Speed" {
-            args.__New(value)
+            args.InsertAt(3, value)
         }
     }
-    Selected.InsertAt(1,args)
+    Selected.InsertAt(1, args)
 }
 
-Update2(thisGui,*) {
+Update2(thisGui, *) {
     global Guns, Selected
-    local args := []
+    local args := [0, 0, 0]
     local name := String(Guns[2][thisGui.Value])
     local f := FileRead("settings.json")
-    local data := JSON.parse(f)
+    local data := parse(&f)
     for Key, value in data[name] {
         if Key == "Delay1" {
-            args.__New(value)
+            args.InsertAt(1, value)
         } else if Key == "Delay2" {
-            args.__New(value)
+            args.InsertAt(2, value)
         } else if Key == "Speed" {
-            args.__New(value)
+            args.InsertAt(3, value)
         }
     }
-    Selected.InsertAt(2,args)
+    Selected.InsertAt(2, args)
 }
 
 SmartRead() {
     local f := FileRead("GunNames.txt")
-    local data := StrSplit(f,"`n")
+    local data := StrSplit(f, "`n")
     local PrimaryGuns := Array()
     local SecondaryGuns := Array()
-    for _,v in data {
-        local GunType := SubStr(v,1,9)
-        GunType := StrReplace(GunType,A_Space,"")
+    for _, v in data {
+        local GunType := SubStr(v, 1, 9)
+        GunType := StrReplace(GunType, " ", "")
         if GunType == "Primary" {
-            for _,v in StrSplit(v,A_Space) {
-                if (v != "Primary" && v != "" && v != " ") {
-                    PrimaryGuns.__New(String(v))
+            for _, t in StrSplit(v, " ") {
+                if (t != "Primary" && t != "" && t != " ") {
+                    PrimaryGuns.InsertAt(PrimaryGuns.Length + 1, t)
                 }
             }
         } else if GunType == "Secondary" {
-            for _,v in StrSplit(v,A_Space) {
-                if (v != "Secondary" && v != "" && v != " ") {
-                    SecondaryGuns.__New(String(v))
+            for _, c in StrSplit(v, " ") {
+                if (c != "Secondary" && c != "" && c != " ") {
+                    SecondaryGuns.InsertAt(SecondaryGuns.Length + 1, c)
                 }
             }
         }
     }
-    return [PrimaryGuns,SecondaryGuns]
+    return [PrimaryGuns, SecondaryGuns]
 }

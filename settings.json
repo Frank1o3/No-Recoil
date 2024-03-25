@@ -14,14 +14,19 @@
         "Delay1": 200,
         "Delay2": 40
     },
+    "M4": {
+        "Speed": 2.5,
+        "Delay1": 200,
+        "Delay2": 40
+    },
     "S1": {
         "Speed": 3.5,
         "Delay1": 100,
         "Delay2": 10
     },
-    "M4": {
-        "Speed": 2.5,
-        "Delay1": 200,
-        "Delay2": 40
+    " ": {
+        "Speed": 0,
+        "Delay1": 0,
+        "Delay2": 0
     }
 }

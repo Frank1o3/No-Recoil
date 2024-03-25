@@ -109,3 +109,11 @@ parse(&src, args*) {
 	
 	return tree[1]
 }
+; Example usage
+jsonString := FileRead("settings.json")
+parsedData := parse(&jsonString)
+
+; Accessing values
+for key, value in parsedData["Korblox-Deathcannon"] {
+    MsgBox value
+}
