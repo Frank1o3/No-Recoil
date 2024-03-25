@@ -127,7 +127,7 @@ main() {
     if !Enabled {
         return
     }
-    if GetKeyState("F","P") || GetKeyState("F","Enter") {
+    if GetKeyState("F","P") || GetKeyState("Enter","P") {
         Primary := 1
     }
     ToolTip (Primary == 1) ? "Primary":"Secondary"
