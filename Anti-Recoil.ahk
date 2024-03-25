@@ -3,7 +3,10 @@ InstallKeybdHook(true)
 #Include JSON.ahk
 
 ; Displays a tray tip to inform the user about the script's status and hotkeys.
-TrayTip "Script is running`nF4: Closes the Script.`nF3: Reload's the Script.`nF2: Enable/Disable the Script`nF1: To open the Gui.", "Status"
+TrayTip "Script is Running...", "Status Report"
+SetTimer () => TrayTip(), -3000
+Sleep 3000
+TrayTip "F4: Closes the Script.`nF3: Reload's the Script.`nF2: Enable/Disable the Script`nF1: Open's Gui", "Key binds"
 SetTimer () => TrayTip(), -10000 ; Sets a timer to periodically show the tray tip.
 
 Selected := Array([0,0,0],[0,0,0])
