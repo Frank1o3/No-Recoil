@@ -144,6 +144,7 @@ Update1(thisGui, _) {
     c := String(StrLower(thisGui.Text))
     if c == " " {
         MsgBox "Pls Select a valid option"
+        return
     }
     for Key, value in data[c] {
         if Key == "Delay1" {
@@ -164,6 +165,7 @@ Update2(thisGui, _) {
     c := String(StrLower(thisGui.Text))
     if c == " " {
         MsgBox "Pls Select a valid option"
+        return
     }
     for Key, value in data[c] {
         if Key == "Delay1" {
