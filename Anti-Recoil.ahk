@@ -6,8 +6,8 @@ Enabled := false
 
 ; Displays a tray tip to inform the user about the script's status and hotkeys.
 TrayTip "Script is Running...", "Status Report"
-SetTimer () => TrayTip(), -2000
-Sleep 2500
+SetTimer () => TrayTip(), -1000
+Sleep 1500
 TrayTip "F4: Closes the Script.`nF3: Reload's the Script.`nF2: Enable/Disable the Script`nF1: Open's Gui", "Key binds"
 SetTimer () => TrayTip(), -10000 ; Sets a timer to periodically show the tray tip.
 
@@ -65,16 +65,16 @@ WheelUp::
     if !Enabled {
         return
     }
-    Send("{WheelDown Down}")
-    Sleep 300
-    Send("{WheelDown Up}")
-    Sleep 300
     if (Primary == 1) {
         Primary := 2
     } else {
         Primary := 1
     }
     Delay := Selected[Primary][1]
+    Send("{WheelDown Down}")
+    Sleep 500
+    Send("{WheelDown Up}")
+    Sleep 500
 }
 
 #HotIf WinActive('Roblox')
@@ -132,7 +132,6 @@ main() {
         Primary := 1
     }
     ;ToolTip (Primary == 1) ? "Primary":"Secondary"
-    ToolTip Delay
     if (Drag) {
         DllCall("mouse_event", "UInt", 0x01, "UInt", 0, "UInt", Selected[Primary][3])
         Sleep Delay
