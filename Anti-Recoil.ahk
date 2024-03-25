@@ -27,9 +27,9 @@ for name in names {
     LoadVals(name)
 }
 
-MyGui := Gui(, "Gun's")
-Option := MyGui.AddDropDownList("x5 y10 w100", list)
-MyGui.AddText("x110 y7 w100 h35", "Select the gun you are using")
+MyGui := Gui(, "Gun's Options")
+Option := MyGui.AddDropDownList("x5 y10 w140", list)
+MyGui.AddText("w150 y10 w150 h30", "Select the gun you are using")
 Option.OnEvent("Change", update)
 
 SetTimer(main, 1)

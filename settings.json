@@ -13,5 +13,10 @@
         "Speed": 2.5,
         "Delay1": 450,
         "Delay2": 20
+    },
+    "KorBlox-Deathcannon": {
+        "Speed": 2.5,
+        "Delay1": 150,
+        "Delay2": 110
     }
 }
