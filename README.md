@@ -30,8 +30,8 @@ The script's behavior can be customized by editing the `settings.json` file. Thi
 
 ## Hotkeys
 
-- **F1**: Closes the script.
-- **F2**: Opens/closes the GUI for selecting a gun.
+- **F1**: Opens/closes the GUI for selecting a gun.
+- **F2**: Enables the script
 - **F3**: Reloads the script.
 - **F4**: Exits the script.
 
