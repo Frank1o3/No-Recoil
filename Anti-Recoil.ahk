@@ -142,6 +142,7 @@ Update1(thisGui,*) {
     global Guns, Selected, Delay
     local args := []
     local name := String(Guns[1][thisGui.Value])
+    MsgBox name
     local f := FileRead("settings.json")
     local data := JSON.parse(f)
     for Key, value in data[name] {
@@ -185,14 +186,14 @@ SmartRead() {
         GunType := StrReplace(GunType,A_Space,"")
         if GunType == "Primary" {
             for _,v in StrSplit(v,A_Space) {
-                if v != "Primary" && v != "" && v != " "{
-                    PrimaryGuns.__New(v)
+                if (v != "Primary" && v != "" && v != " ") {
+                    PrimaryGuns.__New(String(v))
                 }
             }
         } else if GunType == "Secondary" {
             for _,v in StrSplit(v,A_Space) {
-                if v != "Secondary" && v != "" && v != " "{
-                    SecondaryGuns.__New(v)
+                if (v != "Secondary" && v != "" && v != " ") {
+                    SecondaryGuns.__New(String(v))
                 }
             }
         }
