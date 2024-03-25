@@ -141,10 +141,9 @@ main() {
 Update1(thisGui, *) {
     global Guns, Selected, Delay
     local args := [0, 0, 0]
-    local name := String(Guns[1][thisGui.Value])
     local f := FileRead("settings.json")
     local data := parse(&f)
-    for Key, value in data[name] {
+    for Key, value in data[StrLower(thisGui.Text)] {
         if Key == "Delay1" {
             args.InsertAt(1, value)
         } else if Key == "Delay2" {
@@ -159,10 +158,9 @@ Update1(thisGui, *) {
 Update2(thisGui, *) {
     global Guns, Selected
     local args := [0, 0, 0]
-    local name := String(Guns[2][thisGui.Value])
     local f := FileRead("settings.json")
     local data := parse(&f)
-    for Key, value in data[name] {
+    for Key, value in data[StrLower(thisGui.Text)] {
         if Key == "Delay1" {
             args.InsertAt(1, value)
         } else if Key == "Delay2" {

@@ -1,32 +1,27 @@
 {
-    "Scar-H": {
+    "scar-h": {
         "Speed": 2.5,
         "Delay1": 500,
         "Delay2": 15
     },
-    "HK54": {
+    "hk54": {
         "Speed": 2.5,
         "Delay1": 498,
         "Delay2": 50
     },
-    "Korblox-Deathcannon": {
+    "korblox-deathcannon": {
         "Speed": 3,
         "Delay1": 200,
         "Delay2": 40
     },
-    "M4": {
+    "m4": {
         "Speed": 2.5,
         "Delay1": 200,
         "Delay2": 40
     },
-    "S1": {
+    "s1": {
         "Speed": 3.5,
         "Delay1": 100,
         "Delay2": 10
-    },
-    " ": {
-        "Speed": 0,
-        "Delay1": 0,
-        "Delay2": 0
     }
 }
