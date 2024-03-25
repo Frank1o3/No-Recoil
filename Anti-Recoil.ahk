@@ -7,6 +7,9 @@
  * @version 1.0.0
  ***********************************************************************/
 
+TrayTip "Script is running`nF1: Closes the Script", "Status"
+SetTimer () => TrayTip(), -5000
+
 ; Force the script to run as a single instance, preventing multiple instances from running simultaneously.
 #SingleInstance Force
 
