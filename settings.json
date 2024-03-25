@@ -2,11 +2,16 @@
     "Scar-H": {
         "Speed": 2.5,
         "Delay1": 500,
-        "Delay2": 22
+        "Delay2": 15
     },
     "HK54": {
         "Speed": 2.5,
-        "Delay1": 500,
+        "Delay1": 498,
+        "Delay2": 50
+    },
+    "Korblox": {
+        "Speed": 3,
+        "Delay1": 200,
         "Delay2": 40
     },
     "S1": {

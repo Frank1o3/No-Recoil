@@ -131,7 +131,7 @@ main() {
     if GetKeyState("F","P") {
         Primary := 1
     }
-    ;ToolTip (Primary == 1) ? "Primary":"Secondary"
+    ToolTip (Primary == 1) ? "Primary":"Secondary"
     if (Drag) {
         DllCall("mouse_event", "UInt", 0x01, "UInt", 0, "UInt", Selected[Primary][3])
         Sleep Delay
@@ -141,7 +141,7 @@ main() {
 Update1(thisGui,*) {
     global Guns, Selected, Delay
     local args := []
-    local name := Guns[1][thisGui.Value]
+    local name := String(Guns[1][thisGui.Value])
     local f := FileRead("settings.json")
     local data := JSON.parse(f)
     for Key, value in data[name] {
@@ -160,7 +160,7 @@ Update1(thisGui,*) {
 Update2(thisGui,*) {
     global Guns, Selected
     local args := []
-    local name := Guns[2][thisGui.Value]
+    local name := String(Guns[2][thisGui.Value])
     local f := FileRead("settings.json")
     local data := JSON.parse(f)
     for Key, value in data[name] {
@@ -185,13 +185,13 @@ SmartRead() {
         GunType := StrReplace(GunType,A_Space,"")
         if GunType == "Primary" {
             for _,v in StrSplit(v,A_Space) {
-                if v != "Primary" && v != "" {
+                if v != "Primary" && v != "" && v != " "{
                     PrimaryGuns.__New(v)
                 }
             }
         } else if GunType == "Secondary" {
             for _,v in StrSplit(v,A_Space) {
-                if v != "Secondary" && v != "" {
+                if v != "Secondary" && v != "" && v != " "{
                     SecondaryGuns.__New(v)
                 }
             }
