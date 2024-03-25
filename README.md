@@ -2,7 +2,7 @@
 
 ## Overview
 
-This script is designed to reduce recoil in Roblox games, specifically optimized for the H scar. It uses AutoHotkey to simulate mouse movements and clicks, aiming to provide a smoother gaming experience. The script is intended to enhance gameplay by helping players control recoil more effectively.
+This script is designed to reduce recoil in Roblox games, It uses AutoHotkey to simulate mouse movements and clicks, aiming to provide a smoother gaming experience. The script is intended to enhance gameplay by helping players control recoil more effectively.
 
 ## Features
 
