@@ -29,6 +29,10 @@ SetTimer(main, 1)
 F4:: ExitApp(0)
 F3:: Reload()
 
+F2:: {
+
+}
+
 #HotIf WinActive('Roblox')
 F1::
 {
