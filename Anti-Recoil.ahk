@@ -27,15 +27,15 @@ for name in names {
     LoadVals(name)
 }
 
-MyGui := Gui(,"Gun's")
-Option := MyGui.AddDropDownList("x5 y10 w100",list)
-MyGui.AddText("x110 y7 w100 h35","Select the gun you are using")
+MyGui := Gui(, "Gun's")
+Option := MyGui.AddDropDownList("x5 y10 w100", list)
+MyGui.AddText("x110 y7 w100 h35", "Select the gun you are using")
 Option.OnEvent("Change", update)
 
-SetTimer(main,1)
+SetTimer(main, 1)
 
 #UseHook true
-F1::ExitApp()
+F1:: ExitApp()
 
 F2::
 {
@@ -98,7 +98,7 @@ main() {
     }
 }
 
-; Functions 
+; Functions
 
 LoadVals(gunName) {
     global NormalZoomDelays, ZoomInDelays, Speeds
@@ -115,8 +115,8 @@ LoadVals(gunName) {
     }
 }
 
-update(thisGui,*) {
-    global MyGui, Speeds, ZoomInDelays, NormalZoomDelays
+update(thisGui, *) {
+    global MyGui, Speeds, ZoomInDelays, NormalZoomDelays, NormalDelay, ZoomInDelay, Speed
     local GunNum := thisGui.Value
     Speed := Speeds[GunNum]
     NormalDelay := NormalZoomDelays[GunNum]
