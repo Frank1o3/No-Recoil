@@ -3,6 +3,7 @@ InstallKeybdHook(true)
 #Include JSON.ahk
 
 Enabled := false
+f := FileRead("settings.json")
 
 ; Displays a tray tip to inform the user about the script's status and hotkeys.
 TrayTip "Script is Running...", "Status Report"
@@ -138,12 +139,13 @@ main() {
     }
 }
 
-Update1(thisGui, *) {
-    global Guns, Selected, Delay
+Update1(thisGui, _) {
+    global Guns, Selected, f
     local args := [0, 0, 0]
-    local f := FileRead("settings.json")
-    local data := parse(&f)
-    for Key, value in data[StrLower(thisGui.Text)] {
+    local data := parse(&f) ; Assuming JSON.ahk is compatible with AHK v2
+    local c := String(StrLower(thisGui.Text))
+    MsgBox c
+    for Key, value in data[c] {
         if Key == "Delay1" {
             args.InsertAt(1, value)
         } else if Key == "Delay2" {
@@ -155,12 +157,13 @@ Update1(thisGui, *) {
     Selected.InsertAt(1, args)
 }
 
-Update2(thisGui, *) {
-    global Guns, Selected
+Update2(thisGui, _) {
+    global Guns, Selected, f
     local args := [0, 0, 0]
-    local f := FileRead("settings.json")
     local data := parse(&f)
-    for Key, value in data[StrLower(thisGui.Text)] {
+    local c := String(StrLower(thisGui.Text))
+    MsgBox c
+    for Key, value in data[c] {
         if Key == "Delay1" {
             args.InsertAt(1, value)
         } else if Key == "Delay2" {
