@@ -1,12 +1,12 @@
-#SingleInstance Force
-InstallKeybdHook(true)
-#Include JSON.ahk
+#SingleInstance Force ; Ensures only one instance of the script runs at a time.
+InstallKeybdHook(true) ; Installs a keyboard hook to detect key presses.
+#Include JSON.ahk ; Includes the JSON library for parsing JSON files.
 
-; Tell the User the script settings
+; Displays a tray tip to inform the user about the script's status and hotkeys.
 TrayTip "Script is running`nF1: Closes the Script`nF2 To open the Gui to select a gun", "Status"
-SetTimer () => TrayTip(), -3000
+SetTimer () => TrayTip(), -3000 ; Sets a timer to periodically show the tray tip.
 
-; Variable setup
+; Initializes arrays and variables for managing delays, speeds, and dragging state.
 NormalZoomDelays := Array()
 ZoomInDelays := Array()
 Speeds := Array()
@@ -17,6 +17,7 @@ show := false
 Delay := 0
 Speed := 0
 
+; Reads gun names from a file and loads their settings.
 f := FileRead("GunNames.txt")
 names := StrSplit(f, " ")
 list := Array()
@@ -27,17 +28,19 @@ for name in names {
     LoadVals(name)
 }
 
+; Creates a GUI for selecting a gun.
 MyGui := Gui(, "Gun's Options")
 Option := MyGui.AddDropDownList("x5 y10 w140", list)
 MyGui.AddText("w150 y10 w150 h30", "Select the gun you are using")
 Option.OnEvent("Change", update)
 
-SetTimer(main, 1)
+SetTimer(main, 1) ; Sets a timer to call the main function every millisecond.
 
-#UseHook true
-F1:: ExitApp()
+#UseHook true ; Enables the use of hooks for mouse and keyboard events.
+F1::ExitApp() ; Defines a hotkey to exit the script.
 
-F2::
+#HotIf WinActive('Roblox') ; Ensures the following hotkeys only work when Roblox is the active window.
+F2:: ; Defines a hotkey to show/hide the GUI.
 {
     global show
     if show {
@@ -58,7 +61,7 @@ F2::
 LButton::
 LButton Up::
 {
-    ; Toggle dragging state and simulate mouse down/up events.
+    ; Toggles the dragging state and simulates mouse down/up events.
     global Drag
     switch A_ThisHotkey {
         case "LButton":
@@ -74,7 +77,7 @@ LButton Up::
 RButton::
 RButton Up::
 {
-    ; Change delay based on zooming state and simulate right mouse button down/up events.
+    ; Changes the delay based on zooming state and simulates right mouse button down/up events.
     global Delay
     switch A_ThisHotkey {
         case "RButton":
@@ -86,7 +89,7 @@ RButton Up::
     }
 }
 
-; Disable the use of hooks for mouse and keyboard events.
+; Disables the use of hooks for mouse and keyboard events.
 #UseHook false
 
 ; Main function that is called every millisecond. If dragging is active, it simulates a mouse event with the specified speed and delay.
@@ -101,6 +104,7 @@ main() {
 ; Functions
 
 LoadVals(gunName) {
+    ; Loads settings for a specific gun from a JSON file.
     global NormalZoomDelays, ZoomInDelays, Speeds
     local f := FileRead("settings.json")
     local data := JSON.parse(f)
@@ -116,6 +120,7 @@ LoadVals(gunName) {
 }
 
 update(thisGui, *) {
+    ; Updates the script's settings based on the selected gun in the GUI.
     global MyGui, Speeds, ZoomInDelays, NormalZoomDelays, NormalDelay, ZoomInDelay, Speed
     local GunNum := thisGui.Value
     Speed := Speeds[GunNum]
