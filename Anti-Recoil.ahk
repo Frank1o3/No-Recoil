@@ -163,10 +163,12 @@ GetNames(data, type) {
     out := Array()
     a := StrSplit(data, "`n")
     for _, l in a {
-        b := StrSplit(l, A_Space)
-        t := StrReplace(b[1], "*", "")
-        if t == type {
-            out.__New(StrReplace(b[2], "*", ""))
+        if !InStr(l, "+") {
+            b := StrSplit(l, A_Space)
+            t := StrReplace(b[1], "*", "")
+            if t == type {
+                out.__New(StrReplace(b[2], "*", ""))
+            }
         }
     }
     return out
@@ -181,36 +183,34 @@ parse(data) {
     out := Map()
     for b in a {
         data := StrSplit(b, A_Space)
-        if InStr(data[1],"+") {
-            return
+        if !InStr(data[1], "+") {
+            GunType := StrReplace(data[1], "*", "")
+            name := StrReplace(data[2], "*", "")
+            if (GunType == "Primary") {
+                speed := StrReplace(data[3], "*", "")
+                Delay1 := StrReplace(data[4], "*", "")
+                Delay2 := StrReplace(data[5], "*", "")
+                base.__New(name, [speed, Delay1, Delay2])
+            }
+            out.Set("Primary", base)
         }
-        GunType := StrReplace(data[1], "*", "")
-        name := StrReplace(data[2], "*", "")
-        if (GunType == "Primary") {
-            speed := StrReplace(data[3], "*", "")
-            Delay1 := StrReplace(data[4], "*", "")
-            Delay2 := StrReplace(data[5], "*", "")
-            base.__New(name, [speed, Delay1, Delay2])
-        }
-        out.Set("Primary", base)
     }
     GunType := ""
     base := Map()
     name := ""
     for b in a {
         data := StrSplit(b, A_Space)
-        if InStr(data[1],"+") {
-            return
+        if !InStr(data[1], "+") {
+            GunType := StrReplace(data[1], "*", "")
+            name := StrReplace(data[2], "*", "")
+            if (GunType == "Secondary") {
+                speed := StrReplace(data[3], "*", "")
+                Delay1 := StrReplace(data[4], "*", "")
+                Delay2 := StrReplace(data[5], "*", "")
+                base.__New(name, [speed, Delay1, Delay2])
+            }
+            out.Set("Secondary", base)
         }
-        GunType := StrReplace(data[1], "*", "")
-        name := StrReplace(data[2], "*", "")
-        if (GunType == "Secondary") {
-            speed := StrReplace(data[3], "*", "")
-            Delay1 := StrReplace(data[4], "*", "")
-            Delay2 := StrReplace(data[5], "*", "")
-            base.__New(name, [speed, Delay1, Delay2])
-        }
-        out.Set("Secondary", base)
     }
     GunType := ""
     base := Map()
