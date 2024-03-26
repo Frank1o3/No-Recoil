@@ -1,38 +1,43 @@
 #SingleInstance Force
 InstallKeybdHook(true)
-#Include JSON.ahk
 
+nameLen := 9
+f := FileRead("settings.txt")
 Enabled := false
-f := FileRead("settings.json")
+Primary := 1
+Selected := ["", ""]
+Drag := false
+Show := false
+ZoomIn := 2
+delay := 0
+
+data := parse(f)
 
 ; Displays a tray tip to inform the user about the script's status and hotkeys.
 TrayTip "Script is Running...", "Status Report"
 SetTimer () => TrayTip(), -1000
-Sleep 1500
+Sleep 2000
 TrayTip "F4: Closes the Script.`nF3: Reload's the Script.`nF2: Enable/Disable the Script`nF1: Open's Gui", "Key binds"
 SetTimer () => TrayTip(), -10000 ; Sets a timer to periodically show the tray tip.
 
-Selected := Array([0, 0, 0], [0, 0, 0])
-Guns := SmartRead()
-Primary := 1
-Drag := false
-Show := false
-Delay := 0
-
 MyGui := Gui()
-Option1 := MyGui.AddDropDownList("x5 y10 w140", Guns[1])
+Option1 := MyGui.AddDropDownList("x5 y10 w140", GetNames(f, "Primary"))
 MyGui.AddText("x150 y10 w150 h30", "Select Your Primary Gun.")
-Option2 := MyGui.AddDropDownList("x5 y40 w140", Guns[2])
+Option2 := MyGui.AddDropDownList("x5 y40 w140", GetNames(f, "Secondary"))
 MyGui.AddText("x150 y40 w150 h30", "Select Your Secondary Gun.")
-MyGui.AddText("x5 y80 w150 h 30", "Do not select the empty option the script will break")
+MyGui.AddText("x5 y80 w150 h30", "Do not leave the option's empty the script will break")
 
 Option1.OnEvent("Change", Update1)
 Option2.OnEvent("Change", Update2)
 
-SetTimer(main, 1)
+; Setup Main Loop
+SetTimer(Main, 1)
+
+; HotKeys
 
 #UseHook true
-F4:: ExitApp(0)
+
+F4:: ExitApp()
 F3:: Reload()
 
 #HotIf WinActive('Roblox')
@@ -41,6 +46,7 @@ F2:: {
     Enabled := !Enabled
     Sleep 100
 }
+
 
 #HotIf WinActive('Roblox')
 F1::
@@ -63,7 +69,7 @@ F1::
 #HotIf WinActive('Roblox')
 WheelUp::
 {
-    global Primary, Enabled, Delay, Selected
+    global Primary, Enabled
     if !Enabled {
         return
     }
@@ -72,7 +78,6 @@ WheelUp::
     } else {
         Primary := 1
     }
-    Delay := Selected[Primary][1]
     Send("{WheelDown Down}")
     Sleep 500
     Send("{WheelDown Up}")
@@ -106,113 +111,111 @@ RButton::
 RButton Up::
 {
     ; Changes the delay based on zooming state and simulates right mouse button down/up events.
-    global Selected, Primary, Delay, Enabled
+    global Enabled, ZoomIn
     switch A_ThisHotkey {
         case "RButton":
             Click("Right Down")
             if !Enabled {
                 return
             }
-            Delay := Selected[Primary][2]
+            ZoomIn := 3
         case "RButton Up":
             Click("Right Up")
             if !Enabled {
                 return
             }
-            Delay := Selected[Primary][1]
+            ZoomIn := 2
     }
 }
 
-main() {
-    global Drag, Delay, Primary, Selected, Enabled
+#UseHook false
+
+; Functions
+
+Update1(thisGui, *) {
+    global Selected, delay, Primary, ZoomIn
+    Selected[1] := thisGui.Text
+    t := (Primary == 1) ? "Primary" : "Secondary"
+    delay := data.Get(t)[thisGui.Text][ZoomIn]
+}
+
+Update2(thisGui, *) {
+    global Selected
+    Selected[2] := thisGui.Text
+}
+
+Main() {
+    global Enabled, Selected, data, Drag, ZoomIn, Primary, delay
     if !Enabled {
         return
     }
+    ToolTip (Primary == 1) ? "Primary" : "Secondary"
     if GetKeyState("F", "P") {
         Primary := 1
     }
-    ToolTip (Primary == 1) ? "Primary" : "Secondary"
-    if (Drag) {
-        DllCall("mouse_event", "UInt", 0x01, "UInt", 0, "UInt", Selected[Primary][3])
-        Sleep Delay
+    if Drag {
+        t := (Primary == 1) ? "Primary" : "Secondary"
+        DllCall("mouse_event", "UInt", 0x01, "UInt", 0, "UInt", data.Get(t)[Selected.Get(Primary)][1])
+        Sleep delay
     }
 }
 
-Update1(thisGui, _) {
-    global Selected, f
-    args := [0, 0, 0]
-    data := parse(&f) ; Assuming JSON.ahk is compatible with AHK v2
-    c := thisGui.Text
-    MyGui.Submit(false)
-    if (c == " " || c == "`n" ||  c == "`t" ||  c == "") {
-        MsgBox "Pls Select a valid option"
-        return
-    }
-    try {
-        for Key, value in data[c] {
-            if Key == "Delay1" {
-                args.InsertAt(1, Integer(value))
-            } else if Key == "Delay2" {
-                args.InsertAt(2, Integer(value))
-            } else if Key == "Speed" {
-                args.InsertAt(3, Float(value))
-            }
+GetNames(data, type) {
+    global nameLen
+    out := Array()
+    a := StrSplit(data, "`n")
+    for _, l in a {
+        b := StrSplit(l, A_Space)
+        t := StrReplace(b[1], "*", "")
+        if t == type {
+            out.__New(StrReplace(b[2], "*", ""))
         }
     }
-    catch {
-        ExitApp(0)
-    }
-    Selected.InsertAt(1, args)
+    return out
 }
 
-Update2(thisGui, _) {
-    global Selected, f
-    args := [0, 0, 0]
-    data := parse(&f)
-    c := thisGui.Text
-    MyGui.Submit(false)
-    if (c == " " || c == "`n" ||  c == "`t" ||  c == "") {
-        MsgBox "Pls Select a valid option"
-        return
-    }
-    try {
-        for Key, value in data[c] {
-            if Key == "Delay1" {
-                args.InsertAt(1, Integer(value))
-            } else if Key == "Delay2" {
-                args.InsertAt(2, Integer(value))
-            } else if Key == "Speed" {
-                args.InsertAt(3, Float(value))
-            }
+parse(data) {
+    global nameLen
+    name := ""
+    GunType := ""
+    a := StrSplit(data, "`n")
+    base := Map()
+    out := Map()
+    for b in a {
+        data := StrSplit(b, A_Space)
+        GunType := StrReplace(data[1], "*", "")
+        name := StrReplace(data[2], "*", "")
+        if (GunType == "Primary") {
+            speed := StrSplit(data[3], ":")[2]
+            speed := StrReplace(speed, "+", "")
+            Delay1 := StrSplit(data[4], ":")[2]
+            Delay1 := StrReplace(Delay1, "+", "")
+            Delay2 := StrSplit(data[5], ":")[2]
+            Delay2 := StrReplace(Delay2, "+", "")
+            base.__New(name, [speed, Delay1, Delay2])
         }
+        out.Set("Primary", base)
     }
-    catch {
-        ExitApp(0)
-    }
-    Selected.InsertAt(2, args)
-}
-
-SmartRead() {
-    local f := FileRead("GunNames.txt")
-    local data := StrSplit(f, "`n")
-    local PrimaryGuns := Array()
-    local SecondaryGuns := Array()
-    for _, v in data {
-        local GunType := SubStr(v, 1, 9)
-        GunType := StrReplace(GunType, " ", "")
-        if GunType == "Primary" {
-            for _, t in StrSplit(v, " ") {
-                if (t != "Primary" && t != "" && t != " ") {
-                    PrimaryGuns.InsertAt(PrimaryGuns.Length + 1, t)
-                }
-            }
-        } else if GunType == "Secondary" {
-            for _, c in StrSplit(v, " ") {
-                if (c != "Secondary" && c != "" && c != " ") {
-                    SecondaryGuns.InsertAt(SecondaryGuns.Length + 1, c)
-                }
-            }
+    GunType := ""
+    base := Map()
+    name := ""
+    for b in a {
+        data := StrSplit(b, A_Space)
+        GunType := StrReplace(data[1], "*", "")
+        name := StrReplace(data[2], "*", "")
+        if (GunType == "Secondary") {
+            speed := StrSplit(data[3], ":")[2]
+            speed := StrReplace(speed, "+", "")
+            Delay1 := StrSplit(data[4], ":")[2]
+            Delay1 := StrReplace(Delay1, "+", "")
+            Delay2 := StrSplit(data[5], ":")[2]
+            Delay2 := StrReplace(Delay2, "+", "")
+            base.__New(name, [speed, Delay1, Delay2])
         }
+        out.Set("Secondary", base)
     }
-    return [PrimaryGuns, SecondaryGuns]
+    GunType := ""
+    base := Map()
+    name := ""
+    return out
 }
