@@ -128,8 +128,6 @@ RButton Up::
     }
 }
 
-#UseHook false
-
 ; Functions
 
 Update1(thisGui, *) {
