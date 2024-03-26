@@ -181,15 +181,15 @@ parse(data) {
     out := Map()
     for b in a {
         data := StrSplit(b, A_Space)
+        if InStr(data[1],"+") {
+            return
+        }
         GunType := StrReplace(data[1], "*", "")
         name := StrReplace(data[2], "*", "")
         if (GunType == "Primary") {
-            speed := StrSplit(data[3], ":")[2]
-            speed := StrReplace(speed, "+", "")
-            Delay1 := StrSplit(data[4], ":")[2]
-            Delay1 := StrReplace(Delay1, "+", "")
-            Delay2 := StrSplit(data[5], ":")[2]
-            Delay2 := StrReplace(Delay2, "+", "")
+            speed := StrReplace(data[3], "*", "")
+            Delay1 := StrReplace(data[4], "*", "")
+            Delay2 := StrReplace(data[5], "*", "")
             base.__New(name, [speed, Delay1, Delay2])
         }
         out.Set("Primary", base)
@@ -199,15 +199,15 @@ parse(data) {
     name := ""
     for b in a {
         data := StrSplit(b, A_Space)
+        if InStr(data[1],"+") {
+            return
+        }
         GunType := StrReplace(data[1], "*", "")
         name := StrReplace(data[2], "*", "")
         if (GunType == "Secondary") {
-            speed := StrSplit(data[3], ":")[2]
-            speed := StrReplace(speed, "+", "")
-            Delay1 := StrSplit(data[4], ":")[2]
-            Delay1 := StrReplace(Delay1, "+", "")
-            Delay2 := StrSplit(data[5], ":")[2]
-            Delay2 := StrReplace(Delay2, "+", "")
+            speed := StrReplace(data[3], "*", "")
+            Delay1 := StrReplace(data[4], "*", "")
+            Delay2 := StrReplace(data[5], "*", "")
             base.__New(name, [speed, Delay1, Delay2])
         }
         out.Set("Secondary", base)

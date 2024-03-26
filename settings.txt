@@ -1,7 +1,8 @@
-Primary** Scar-H************** Speed:3.5 Delay1:500 Delay2:25+
-Primary** HK54**************** Speed:2.5 Delay1:498 Delay2:50
-Primary** M4****************** Speed:2.5 Delay1:200 Delay2:40
-Primary** AK12**************** Speed:2.5 Delay1:600 Delay2:1+
-Primary** Korblok-Deathcannon* Speed:6.5 Delay1:500 Delay2:1+
-Secondary Deagle************** Speed:3.5 Delay1:100 Delay2:10
-Secondary TT50**************** Speed:3.5 Delay1:100 Delay2:10
++GunType* GunName************* Speed Delay1 Delay2
+Primary** Scar-H************** 3.5** 500*** 25****
+Primary** HK54**************** 2.5** 498*** 50****
+Primary** M4****************** 2.5** 200*** 40****
+Primary** AK12**************** 2.5** 600*** 1*****
+Primary** Korblok-Deathcannon* 6.5** 500*** 1*****
+Secondary Deagle************** 3.5** 100*** 10****
+Secondary TT50**************** 3.5** 100*** 10****
