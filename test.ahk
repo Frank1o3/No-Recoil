@@ -4,10 +4,10 @@ name := "settings.txt"
 
 Decoder.ReadFile(name)
 
-names := Decoder.GetNames()
+Guns := Decoder.GetTypes()
 
 data := Decoder.parse()
 
-MsgBox names[1]
+MsgBox Guns[1][2]
 
-MsgBox data[names.Get(1)][1]
+MsgBox data[Guns.Get(1)[2]][1]

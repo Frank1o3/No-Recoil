@@ -23,7 +23,7 @@ class Decoder {
         for i, line in this.content {
             parts := StrSplit(line, ' ')
             GunType := StrReplace(parts[1],'*','')
-            GunName := StrReplace(parts[2],'*','')=
+            GunName := StrReplace(parts[2],'*','')
             tree.__New([GunType,GunName])
         }
         return tree
