@@ -79,9 +79,9 @@ WheelUp::
         Primary := 1
     }
     Send("{WheelDown Down}")
-    Sleep 500
+    Sleep 300
     Send("{WheelDown Up}")
-    Sleep 500
+    Sleep 300
 }
 
 #HotIf WinActive('Roblox')
@@ -132,14 +132,14 @@ RButton Up::
 
 Update1(thisGui, *) {
     global Selected, delay, Primary, ZoomIn
-    Selected[1] := thisGui.Text
+    Selected[1] := GetNames(f, "Primary")[thisGui.Value]
     t := (Primary == 1) ? "Primary" : "Secondary"
     delay := data.Get(t)[thisGui.Text][ZoomIn]
 }
 
 Update2(thisGui, *) {
     global Selected
-    Selected[2] := thisGui.Text
+    Selected[2] := GetNames(f, "Secondary")[thisGui.Value]
 }
 
 Main() {
@@ -147,12 +147,14 @@ Main() {
     if !Enabled {
         return
     }
-    ToolTip (Primary == 1) ? "Primary" : "Secondary"
+    ; ToolTip (Primary == 1) ? "Primary" : "Secondary"
     if GetKeyState("F", "P") {
         Primary := 1
     }
+    t := (Primary == 1) ? "Primary" : "Secondary"
+    delay := Number(data.Get(t)[Selected.Get(Primary)].Get(ZoomIn))
+    ; ToolTip delay
     if Drag {
-        t := (Primary == 1) ? "Primary" : "Secondary"
         DllCall("mouse_event", "UInt", 0x01, "UInt", 0, "UInt", data.Get(t)[Selected.Get(Primary)][1])
         Sleep delay
     }
