@@ -1,7 +1,0 @@
-Primary** Scar-H************* 3.5 500 25
-Primary** HK54*************** 2.5 498 50
-Primary** M4***************** 2.5 200 40
-Primary** AK12*************** 4.5 1200 1
-Primary** Korblok-Deathcannon 6.5 500 1
-Secondary Deagle************* 3.5 100 10
-Secondary TT50*************** 3.5 100 10
