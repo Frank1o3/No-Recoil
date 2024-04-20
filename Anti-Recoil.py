@@ -1,6 +1,5 @@
 import ctypes
 import tkinter as tk
-import keyboard as kb
 from time import sleep
 from tkinter import ttk, messagebox
 from pynput import mouse
