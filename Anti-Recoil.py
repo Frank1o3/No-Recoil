@@ -94,7 +94,7 @@ def move(e: Event):
     while not e.is_set():
         global dy, delay, Enabled
         if not Enabled:
-            return
+            continue
         moveRel(dy=dy)
         sleep(delay)
 
@@ -133,6 +133,7 @@ def on_close():
 def on_Press():
     global Enabled
     Enabled = not(Enabled)
+    print(Enabled)
 
 def show_alert():
     messagebox.showinfo(
