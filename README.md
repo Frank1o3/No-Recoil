@@ -44,4 +44,4 @@ Primary** GunName* Speed:SpeedValue Delay1:Delay1Value Delay2:Delay2Value
 This line adds a custom gun named "CustomGun" with a speed of 2, a first delay of 500 miliseconds, and a second delay of 15.
 
 ## Edeting the Script
-If you want do edit the script got to `SETUP.md`
+If you want do edit the script got to [SETUP.md](https://github.com/Frank1o3/No-Recoil.py/files/15050255/SETUP.md)
