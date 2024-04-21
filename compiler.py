@@ -30,7 +30,7 @@ script_path = "Anti-Recoil.py"
 
 executable_name = "Anti-Recoil"
 
-target_dir = "Copy"
+target_dir = "Anti-Recoil"
 
 json_file_name = "Config.json"
 icon_file = "icon.ico"
@@ -49,7 +49,7 @@ os.rename(compiled_executable_path, target_executable_path)
 settings_file_path = os.path.join(target_dir, json_file_name)
 with open(settings_file_path, "w") as settings_file:
     json.dump(settings, settings_file, indent=4)
-    
+
 os.remove(icon_file)
 
 print(f"Compiled executable moved to {target_executable_path}")
