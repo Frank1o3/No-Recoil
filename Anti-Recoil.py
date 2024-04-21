@@ -133,10 +133,12 @@ def on_close():
     Exit.set()
     root.destroy()
 
+
 def on_Press():
     global Enabled
-    Enabled = not(Enabled)
+    Enabled = not (Enabled)
     print(Enabled)
+
 
 def show_alert():
     messagebox.showinfo(
@@ -174,7 +176,7 @@ if __name__ == "__main__":
     option2.pack(padx=10, pady=5)
     option1.bind("<<ComboboxSelected>>", on_selection_change)
     option2.bind("<<ComboboxSelected>>", on_selection_change)
-    button = ttk.Button(root,text="Enable",command=on_Press)
+    button = ttk.Button(root, text="Enable", command=on_Press)
     button.pack(pady=5)
     root.wm_iconphoto(True, photo)
     root.protocol("WM_DELETE_WINDOW", on_close)
