@@ -17,5 +17,5 @@ Still in your terminal or command prompt, run:
 
 After making your changes and ensuring the script works without errors, you can compile it into an executable file.
 Run the following command:
-    `pyinstaller --onefile --noconsole Anti-Recoil.py`
+    `pyinstaller --onefile --noconsole --icon=icon.ico Anti-Recoil.py`
 This will create a standalone executable file in the dist directory. You can run this file on any Windows system without needing Python installed.
