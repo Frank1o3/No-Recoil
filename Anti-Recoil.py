@@ -159,7 +159,7 @@ if __name__ == "__main__":
     option2.bind("<<ComboboxSelected>>", on_selection_change)
     button = ttk.Button(root,text="Enable",command=on_Press)
     button.pack(pady=5)
-    root.iconbitmap("C:/Users/jahdy/OneDrive/Desktop/Bot v2/icon.ico")
+    root.iconbitmap("icon.ico")
     root.protocol("WM_DELETE_WINDOW", on_close)
     root.mainloop()
     Thread1.join()
