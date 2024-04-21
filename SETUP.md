@@ -10,16 +10,18 @@ First, you need to create a virtual environment. This is a self-contained enviro
 2. Navigate to the directory where your script is located.
 3. Run the following command:
 
-python -m venv venv
+bash python -m venv venv
 
-## If you're using Visual Studio Code, after creating the virtual environment, close and reopen your terminals to ensure they're using the new environment.
+
+### If you're using Visual Studio Code, after creating the virtual environment, close and reopen your terminals to ensure they're using the new environment.
 
 ## Step 2: Install Required Packages
 
 Next, you need to install the necessary Python packages that the script depends on.
 
 1. Still in your terminal or command prompt, run:
-pip install -r requirements.txt
+
+bash pip install -r requirements.txt
 
 
 ## Step 3: Edit the Script
@@ -35,7 +37,8 @@ Before compiling the script, you might want to make some changes to it. Here's h
 After making your changes and ensuring the script works without errors, you can compile it into an executable file.
 
 1. Run the following command:
-pyinstaller --onefile --noconsole --icon=icon.ico Anti-Recoil.py
+
+bash pyinstaller --onefile --noconsole --icon=icon.ico Anti-Recoil.py
 
 
 This will create a standalone executable file in the `dist` directory. You can run this file on any Windows system without needing Python installed.
@@ -44,6 +47,25 @@ This will create a standalone executable file in the `dist` directory. You can r
 
 1. Navigate to the `dist` directory.
 2. Run the `Anti-Recoil.exe` file.
+
+## Additional Steps for Compilation
+
+The `compiler.py` script includes additional steps for compiling the script, including generating an icon from a base64 string and moving the compiled executable and settings file to a specific directory.
+
+### Step 6: Generate Icon
+
+The `compiler.py` script includes a function to generate an icon from a base64 string. This icon is used when compiling the script into an executable. Ensure the `compiler.py` script is run to generate the icon.
+
+### Step 7: Compile with `compiler.py`
+
+Instead of using the `pyinstaller` command directly, use the `compiler.py` script to compile the script. This script handles additional tasks such as generating the icon and moving the compiled executable and settings file to a specific directory.
+
+1. Run the following command:
+
+bash python compiler.py
+
+
+This will compile the script, generate the icon, and move the compiled executable and settings file to the specified directory.
 
 ## Important Notes
 

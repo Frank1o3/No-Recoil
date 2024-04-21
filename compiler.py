@@ -1,6 +1,17 @@
-import os
 import subprocess
+import base64
 import json
+import os
+
+
+def base64_to_image(output_path):
+    base64_string = """AAABAAEADw8QAAEABAAcAQAAFgAAACgAAAAPAAAAHgAAAAEABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg4OAFRUVAB8fHwAj4+PAAAAAAAAAAAAAAAAAAAAA
+    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAEREREAAAAAEREJERAAAAEREQkREQAAERDRCRDREAAREQ0JDREQABERERERERAAEIiJDQiIkAAREREREREQABERDQkN
+    ERAAERDRCRDREAABEREJEREAAAAREQkREAAAAAEREREAAAAAAAAAAAAAA4A4AAMAGAACAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAIAAMAGAADgDgAA
+    """
+    with open(output_path, "wb") as image_file:
+        image_file.write(base64.b64decode(base64_string))
+
 
 settings = {
     "Primary": {
@@ -19,19 +30,24 @@ script_path = "Anti-Recoil.py"
 
 executable_name = "Anti-Recoil"
 
-target_dir = 'Copy'
+target_dir = "Copy"
 
-json_file_name = 'Config.json'
+json_file_name = "Config.json"
+icon_file = "icon.ico"
 
-subprocess.run(['pyinstaller', '--onefile', '--noconsole', f'{script_path}'])
+base64_to_image()
 
-compiled_executable_path = os.path.join('dist', f'{executable_name}.exe')
-target_executable_path = os.path.join(target_dir, f'{executable_name}.exe')
+subprocess.run(
+    ["pyinstaller", "--onefile", "--noconsole", f"--icon={icon_file}", f"{script_path}"]
+)
+
+compiled_executable_path = os.path.join("dist", f"{executable_name}.exe")
+target_executable_path = os.path.join(target_dir, f"{executable_name}.exe")
 os.makedirs(target_dir, exist_ok=True)
 os.rename(compiled_executable_path, target_executable_path)
 
 settings_file_path = os.path.join(target_dir, json_file_name)
-with open(settings_file_path, 'w') as settings_file:
+with open(settings_file_path, "w") as settings_file:
     json.dump(settings, settings_file, indent=4)
 
 print(f"Compiled executable moved to {target_executable_path}")
