@@ -35,7 +35,7 @@ target_dir = "Copy"
 json_file_name = "Config.json"
 icon_file = "icon.ico"
 
-base64_to_image()
+base64_to_image(icon_file)
 
 subprocess.run(
     ["pyinstaller", "--onefile", "--noconsole", f"--icon={icon_file}", f"{script_path}"]
