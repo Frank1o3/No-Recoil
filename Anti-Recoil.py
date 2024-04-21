@@ -1,27 +1,32 @@
+# Import necessary modules
 import io
 import base64
 import ctypes
 import tkinter as tk
 from time import sleep
-from pynput import mouse
 from PIL import Image, ImageTk
+from pynput import mouse, keyboard
 from tkinter import ttk, messagebox
 from threading import Thread, Event
 from json import loads, JSONDecodeError
 
-MOUSEEVENTF_MOVE = 0x0001
+# Initialize global variables
 dy = 0
 delay = 0
-Enabled = False
-Exit = Event()
-root = tk.Tk("No-Recoil")
-primary = []
-secondary = []
-ZoomIn = False
-Shoot = False
-selected = [None, None, None]
 mainGun = 2
+primary = []
+Shoot = False
+ZoomIn = False
+secondary = []
+Exit = Event()
+option1 = None
+option2 = None
+Enabled = False
+root = tk.Tk("No-Recoil")
+MOUSEEVENTF_MOVE = 0x0001
+selected = [None, None, None]
 
+# Load configuration from JSON file
 with open("Config.json", "r") as file:
     try:
         d = file.read()
@@ -35,7 +40,7 @@ for v in data["Primary"]:
 for v in data["Secondary"]:
     secondary.append(v)
 
-
+# Define structures for mouse input
 class MOUSEINPUT(ctypes.Structure):
     _fields_ = [
         ("dx", ctypes.c_long),
@@ -46,14 +51,13 @@ class MOUSEINPUT(ctypes.Structure):
         ("dwExtraInfo", ctypes.POINTER(ctypes.c_void_p)),
     ]
 
-
 class INPUT(ctypes.Structure):
     _fields_ = [
         ("type", ctypes.c_uint),
         ("mi", MOUSEINPUT),
     ]
 
-
+# Initialize user32 DLL and SendInput function
 user32 = ctypes.WinDLL("user32", use_last_error=True)
 SendInput = user32.SendInput
 SendInput.argtypes = [ctypes.c_uint, ctypes.POINTER(INPUT), ctypes.c_int]
@@ -62,7 +66,7 @@ input_struct = INPUT()
 input_struct.type = 0
 mouse_input = MOUSEINPUT()
 
-
+# Function to move mouse relative to current position
 def moveRel(dx: int = 0, dy: int = 0):
     global mouse_input
     mouse_input.dx = dx
@@ -72,7 +76,7 @@ def moveRel(dx: int = 0, dy: int = 0):
     input_array = (INPUT * 1)(input_struct)
     SendInput(1, input_array, ctypes.sizeof(INPUT))
 
-
+# Main function to handle recoil reduction logic
 def main(e: Event):
     while not e.is_set():
         global selected, mainGun, ZoomIn, Shoot, delay, data, dy
@@ -92,7 +96,7 @@ def main(e: Event):
         else:
             dy = 0
 
-
+# Function to move mouse based on recoil reduction settings
 def move(e: Event):
     while not e.is_set():
         global dy, delay, Enabled
@@ -101,7 +105,7 @@ def move(e: Event):
         moveRel(dy=dy)
         sleep(delay)
 
-
+# Function to handle mouse scroll event for gun selection
 def on_scroll(x, y, dx, dy):
     global mainGun
     if mainGun == 2:
@@ -111,7 +115,7 @@ def on_scroll(x, y, dx, dy):
         mainGun = 2
         return
 
-
+# Function to handle mouse click events for shooting and zooming
 def on_click(x, y, button, pressed):
     global ZoomIn, Shoot
     if button == mouse.Button.left:
@@ -119,7 +123,7 @@ def on_click(x, y, button, pressed):
     elif button == mouse.Button.right:
         ZoomIn = int(pressed)
 
-
+# Function to handle selection change in the GUI
 def on_selection_change(event: tk.Event):
     value = event.widget.get()
     global selected
@@ -128,25 +132,34 @@ def on_selection_change(event: tk.Event):
     elif event.widget == option2:
         selected.insert(1, ("Secondary", value))
 
-
+# Function to handle window close event
 def on_close():
     Exit.set()
     root.destroy()
 
-
+# Function to toggle recoil reduction
 def on_Press():
     global Enabled
     Enabled = not (Enabled)
     print(Enabled)
 
+# Function to handle keyboard press event for exiting the script
+def on_press(key: keyboard.Key):
+    global Enabled, Exit
+    if key == keyboard.Key.esc:
+        Enabled = False
+        Exit.set()
+        root.destroy()
 
+# Function to show an alert message
 def show_alert():
     messagebox.showinfo(
         "Alert", "Set Secondary gun then Primary gun if you dont the script will break"
     )
 
-
+# Function to load the icon for the application
 def load():
+    # base64_string is a Icon image but in base64
     base64_string = """AAABAAEADw8QAAEABAAcAQAAFgAAACgAAAAPAAAAHgAAAAEABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg4OAFRUVAB8fHwAj4+PAAAAAAAAAAAAAAAAAAAAA
     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAEREREAAAAAEREJERAAAAEREQkREQAAERDRCRDREAAREQ0JDREQABERERERERAAEIiJDQiIkAAREREREREQABERDQkN
     ERAAERDRCRDREAABEREJEREAAAAREQkREAAAAAEREREAAAAAAAAAAAAAA4A4AAMAGAACAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAIAAMAGAADgDgAA
@@ -157,30 +170,46 @@ def load():
     photo = ImageTk.PhotoImage(image)
     return photo
 
+# Function to set up the GUI
+def setup(root:tk):
+    ttk.Label(root, text="Made by: Frank1o4").pack()
+    ttk.Label(root, text="Primary Guns").pack()
 
+    option1 = ttk.Combobox(root, values=primary)
+    option1.pack(padx=10, pady=0)
+
+    ttk.Label(root, text="Secondary Guns").pack()
+
+    option2 = ttk.Combobox(root, values=secondary)
+    option2.pack(padx=10, pady=5)
+
+    button = ttk.Button(root, text="Enable", command=on_Press)
+    button.pack(pady=5)
+
+    option1.bind("<<ComboboxSelected>>", on_selection_change)
+    option2.bind("<<ComboboxSelected>>", on_selection_change)
+
+# Main execution block
 if __name__ == "__main__":
     show_alert()
     photo = load()
+    setup(root)
+
     Thread1 = Thread(target=main, args=(Exit,))
     Thread2 = Thread(target=move, args=(Exit,))
-    listener = mouse.Listener(on_scroll=on_scroll, on_click=on_click)
+    listener1 = mouse.Listener(on_scroll=on_scroll, on_click=on_click)
+    listener2 = keyboard.Listener(on_press=on_press)
+
     Thread1.start()
     Thread2.start()
-    listener.start()
-    ttk.Label(root, text="Made by: Frank1o4").pack()
-    ttk.Label(root, text="Primary Guns").pack()
-    option1 = ttk.Combobox(root, values=primary)
-    option1.pack(padx=10, pady=0)
-    ttk.Label(root, text="Secondary Guns").pack()
-    option2 = ttk.Combobox(root, values=secondary)
-    option2.pack(padx=10, pady=5)
-    option1.bind("<<ComboboxSelected>>", on_selection_change)
-    option2.bind("<<ComboboxSelected>>", on_selection_change)
-    button = ttk.Button(root, text="Enable", command=on_Press)
-    button.pack(pady=5)
+    listener1.start()
+    listener2.start()
+
     root.wm_iconphoto(True, photo)
     root.protocol("WM_DELETE_WINDOW", on_close)
     root.mainloop()
+
     Thread1.join()
     Thread2.join()
-    listener.stop()
+    listener1.stop()
+    listener2.stop()
