@@ -24,12 +24,8 @@ This script is designed to reduce recoil in Roblox games, specifically tailored 
 ## Adding New Guns
 
 To add a gun from another game or a custom gun, you can edit the `Config.json` file. The syntax for adding a new gun is as follows:
+json "GunName": { "0": 1, "1": 2, "Y-Offset": 0 }
 
-"GunName": {
-    "0": 1,
-    "1": 2,
-    "Y-Offset": 0
-}
 
 - `GunName`: The name of the gun.
 - `Y-Offset`: The offset setting for the gun.
@@ -37,14 +33,11 @@ To add a gun from another game or a custom gun, you can edit the `Config.json` f
 - `1`: The second delay setting for the gun.
 
 **Example**:
+json "CustomGun": { "0": 0.5, "1": 15, "Y-Offset": 2 }
 
-"CustomGun" {
-    "0": 0.5,
-    "1": 15,
-    "Y-Offset": 2
-}
 
-This line adds a custom gun named "CustomGun" with a speed of 2, a first delay of 500 miliseconds, and a second delay of 15.
+This line adds a custom gun named "CustomGun" with a speed of 2, a first delay of 500 milliseconds, and a second delay of 15.
 
 ## Editing the Script
-If you want do edit the script got to [SETUP.md](https://github.com/Frank1o3/No-Recoil.py/files/15050255/SETUP.md)
+
+If you want to edit the script, go to [SETUP.md](https://github.com/Frank1o3/No-Recoil.py/files/15050255/SETUP.md)
