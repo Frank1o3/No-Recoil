@@ -1,2 +1,3 @@
 pynput
 pyinstaller
+pillow

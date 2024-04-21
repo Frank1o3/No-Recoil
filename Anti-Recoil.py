@@ -1,8 +1,11 @@
+import io
+import base64
 import ctypes
 import tkinter as tk
 from time import sleep
-from tkinter import ttk, messagebox
 from pynput import mouse
+from PIL import Image, ImageTk
+from tkinter import ttk, messagebox
 from threading import Thread, Event
 from json import loads, JSONDecodeError
 
@@ -141,8 +144,21 @@ def show_alert():
     )
 
 
+def load():
+    base64_string = """AAABAAEADw8QAAEABAAcAQAAFgAAACgAAAAPAAAAHgAAAAEABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg4OAFRUVAB8fHwAj4+PAAAAAAAAAAAAAAAAAAAAA
+    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAEREREAAAAAEREJERAAAAEREQkREQAAERDRCRDREAAREQ0JDREQABERERERERAAEIiJDQiIkAAREREREREQABERDQkN
+    ERAAERDRCRDREAABEREJEREAAAAREQkREAAAAAEREREAAAAAAAAAAAAAA4A4AAMAGAACAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAIAAMAGAADgDgAA
+    """
+    image_data = base64.b64decode(base64_string)
+    image_data_io = io.BytesIO(image_data)
+    image = Image.open(image_data_io)
+    photo = ImageTk.PhotoImage(image)
+    return photo
+
+
 if __name__ == "__main__":
     show_alert()
+    photo = load()
     Thread1 = Thread(target=main, args=(Exit,))
     Thread2 = Thread(target=move, args=(Exit,))
     listener = mouse.Listener(on_scroll=on_scroll, on_click=on_click)
@@ -160,7 +176,7 @@ if __name__ == "__main__":
     option2.bind("<<ComboboxSelected>>", on_selection_change)
     button = ttk.Button(root,text="Enable",command=on_Press)
     button.pack(pady=5)
-    root.iconbitmap("icon.ico")
+    root.wm_iconphoto(True, photo)
     root.protocol("WM_DELETE_WINDOW", on_close)
     root.mainloop()
     Thread1.join()
