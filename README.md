@@ -25,13 +25,16 @@ This script is designed to reduce recoil in Roblox games, specifically tailored 
 
 To add a gun from another game or a custom gun, you can edit the `Config.json` file. The syntax for adding a new gun is as follows:
 
-Primary** GunName* Speed:SpeedValue Delay1:Delay1Value Delay2:Delay2Value
+"GunName": {
+    "0": 1,
+    "1": 2,
+    "Y-Offset": 0
+}
 
-- `Primary` or `Secondary`: Indicates the type of gun.
 - `GunName`: The name of the gun.
-- `SpeedValue`: The speed setting for the gun.
-- `Delay1Value`: The first delay setting for the gun.
-- `Delay2Value`: The second delay setting for the gun.
+- `Y-Offset`: The offset setting for the gun.
+- `0`: The first delay setting for the gun.
+- `1`: The second delay setting for the gun.
 
 **Example**:
 
