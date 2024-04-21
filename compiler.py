@@ -49,6 +49,8 @@ os.rename(compiled_executable_path, target_executable_path)
 settings_file_path = os.path.join(target_dir, json_file_name)
 with open(settings_file_path, "w") as settings_file:
     json.dump(settings, settings_file, indent=4)
+    
+os.remove(icon_file)
 
 print(f"Compiled executable moved to {target_executable_path}")
 print(f"Settings saved to {settings_file_path}")
