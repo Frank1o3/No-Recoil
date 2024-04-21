@@ -1,0 +1,10 @@
+If you are going to edit the script run this commands:
+
+1. python -m venv venv
+
+if you are using visual studio code after the venv is made just re-open all the terminals
+
+2. pip install requirements.txt
+
+After you do your changes and the script works with no error do this:
+3. pyinstaller --onefile Anti-Recoil.py
