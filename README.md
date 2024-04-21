@@ -2,7 +2,7 @@
 
 ## Overview
 
-This script is designed to reduce recoil in Roblox games, specifically tailored for Gunfight Arena. It uses AutoHotkey to simulate mouse movements and clicks, providing a smoother gaming experience by helping players control recoil more effectively.
+This script is designed to reduce recoil in Roblox games, specifically tailored for Gunfight Arena. It uses Python to simulate mouse movements and clicks, providing a smoother gaming experience by helping players control recoil more effectively.
 
 ## Features
 
